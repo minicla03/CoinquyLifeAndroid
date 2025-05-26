@@ -9,8 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
 import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModel
-import minicla03.coinquylifek.Data.remote.AuthAPI.AuthStatus
 import minicla03.coinquylifek.R
 import minicla03.coinquylifek.HOUSE.Presentation.UI.CoinquyHouseSelectionActivity
 
@@ -47,21 +47,21 @@ class LoginFragment : Fragment()
         }
 
         authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            when
+            when (result.statusAuth)
             {
-                result.token != null && result.statusAuth == AuthStatus.NO_COINQUYHOUSE -> {
+                AuthStatus.SUCCESS -> {
                     val intent = Intent(requireActivity(), CoinquyHouseSelectionActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     requireActivity().finish()
                 }
-                result.token != null && result.statusAuth == AuthStatus.WRONG_PASSWORD -> {
+                AuthStatus.WRONG_PASSWORD -> {
                     Toast.makeText(context, "Password errata!", Toast.LENGTH_SHORT).show()
                 }
-                result.token != null && result.statusAuth == AuthStatus.USER_NOT_FOUND -> {
+                AuthStatus.USER_NOT_FOUND -> {
                     Toast.makeText(context, "User not found!", Toast.LENGTH_SHORT).show()
                 }
-                result.token != null && result.statusAuth == AuthStatus.INVALID_EMAIL -> {
+                AuthStatus.INVALID_EMAIL -> {
                     Toast.makeText(context, "Email non valida!", Toast.LENGTH_SHORT).show()
                 }
                 else -> {

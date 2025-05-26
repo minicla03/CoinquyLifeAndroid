@@ -47,4 +47,5 @@
     <string name="points">Punti</string>
     <string name="description">Studente fuori sede...</string>
     <string name="people">people</string>
+    <string name="create_house">Create house\n</string>
 </resources>

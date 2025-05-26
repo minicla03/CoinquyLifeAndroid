@@ -1,22 +1,27 @@
 package minicla03.coinquylifek.AUTH.Presentation.ViewModel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import minicla03.coinquylifek.APP.TokenManager
+
+import minicla03.coinquylifek.AUTH.Data.RepositoryImpl.AuthRepository
+import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
+import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
+import minicla03.coinquylifek.AUTH.Domain.Model.User
 import minicla03.coinquylifek.AUTH.Domain.Usecase.ILoginUserUseCase
 import minicla03.coinquylifek.AUTH.Domain.Usecase.IRegisterUserUseCase
-import minicla03.coinquylifek.Data.RepositoryEntity.AuthRepository
-import minicla03.coinquylifek.Data.local.entity.User
 import minicla03.coinquylifek.AUTH.Domain.Repository.IAuthRepository
 import minicla03.coinquylifek.AUTH.Domain.Usecase.LoginUserUseCase
 import minicla03.coinquylifek.AUTH.Domain.Usecase.RegisterUserUseCase
-import minicla03.coinquylifek.Data.remote.AuthAPI.AuthResult
-import minicla03.coinquylifek.Data.remote.AuthAPI.AuthStatus
+
 import java.util.concurrent.Executors
 import java.util.regex.Pattern
 
-class AuthViewModel(application: Application) : AndroidViewModel(application)
+class AuthViewModel(application: Application) : ViewModel()
 {
     private val loginUseCase: ILoginUserUseCase
     private val registerUseCase: IRegisterUserUseCase
@@ -31,7 +36,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application)
     {
         val repo: IAuthRepository = AuthRepository(application)
         val executor = Executors.newSingleThreadExecutor()
-        loginUseCase = LoginUserUseCase(repo, executor)
+        val tokenManager = TokenManager(application)
+        loginUseCase = LoginUserUseCase(repo, executor, tokenManager)
         registerUseCase = RegisterUserUseCase(repo, executor)
     }
 
@@ -39,30 +45,31 @@ class AuthViewModel(application: Application) : AndroidViewModel(application)
     {
         if (isInvalidEmail(email))
         {
-            _loginResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, null))
+            _loginResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, ""))
             return
         }
 
         if (password == null)
         {
-            _loginResult.postValue(AuthResult(AuthStatus.INVALID_PASSWORD, null))
+            _loginResult.postValue(AuthResult(AuthStatus.INVALID_PASSWORD, ""))
             return
         }
-        loginUseCase.login(email!!, password) { result ->
-            _loginResult.postValue(result)
+        viewModelScope.launch {
+            loginUseCase.login(email!!, password) { result -> _loginResult.postValue(result) }
         }
+        
     }
 
     fun register(user: User)
     {
         if (isInvalidEmail(user.email))
         {
-            _registerResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, null))
+            _registerResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, ""))
             return
         }
+        viewModelScope.launch {
+            registerUseCase.register(user) { result -> _registerResult.postValue(result) }
 
-        registerUseCase.register(user) { result ->
-            _registerResult.postValue(result)
         }
     }
 

@@ -10,7 +10,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import minicla03.coinquylifek.Data.remote.AuthAPI.AuthStatus
+import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
+import minicla03.coinquylifek.AUTH.Domain.Model.User
 import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModel
 import minicla03.coinquylifek.R
 
@@ -62,7 +63,7 @@ class RegisterFragment : Fragment()
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
-                AuthStatus.AlREADY_REGISTERED -> {
+                AuthStatus.ALREADY_REGISTERED -> {
                     Toast.makeText(context, "User already exist", Toast.LENGTH_SHORT).show()
                 }
                 AuthStatus.INVALID_EMAIL -> {

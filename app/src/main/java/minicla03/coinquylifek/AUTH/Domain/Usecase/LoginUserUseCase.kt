@@ -1,51 +1,49 @@
 package minicla03.coinquylifek.AUTH.Domain.Usecase
 
+import androidx.core.content.ContentProviderCompat.requireContext
+import minicla03.coinquylifek.APP.TokenManager
+import retrofit2.Call
+import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
+import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
 import minicla03.coinquylifek.AUTH.Domain.Repository.IAuthRepository
 import java.util.concurrent.Executor
 import java.util.function.Consumer
+import retrofit2.Callback
+import retrofit2.Response
 
-class LoginUserUseCase(
-    repository: IAuthRepository,
-    private val executor: Executor
-) : ILoginUserUseCase
+class LoginUserUseCase(repository: IAuthRepository, private val executor: Executor, private val tokenManager: TokenManager) : ILoginUserUseCase
 {
     private val repository: IAuthRepository = repository
 
-    override fun login(email: String?, password: String?, callback: Consumer<AuthResult?>)
+    override suspend fun login(email: String?, password: String?, callback: Consumer<AuthResult?>)
     {
-        val remoteCall: Call<AuthResult> = repository.getUserByEmailRemote(email, password)
+        val remoteCall: Call<AuthResult?>? = repository.login(email!!, password!!)
 
-        remoteCall.enqueue(object : Callback()
+        remoteCall?.enqueue(object : Callback<AuthResult?>
         {
-            override fun onResponse(call: Call<AuthResult?>?, response: Response<AuthResult?>)
+            override fun onResponse(call: Call<AuthResult?>, response: Response<AuthResult?>)
             {
-                if (response.isSuccessful() && response.body() != null)
+                val authResult = response.body()
+                if (response.isSuccessful && authResult != null)
                 {
-                    val authResult: Unit = response.body()
-
-                    if (authResult.getStatusAuth() === AuthStatus.SUCCESS)
+                    if (authResult.getStatusAuth() == AuthStatus.SUCCESS)
                     {
-                        val token: String = authResult.getToken()
-                        CoinquyLife.getTokenManager().saveToken(token)
+                        val token = authResult.getToken()
+                        tokenManager.saveToken(token)
                         callback.accept(AuthResult(AuthStatus.SUCCESS, token))
                     }
                     else
                     {
-                        callback.accept(AuthResult(AuthStatus.WRONG_PASSWORD, null))
+                        callback.accept(AuthResult(AuthStatus.WRONG_PASSWORD, ""))
                     }
-                }
-                else
-                {
-                    callback.accept(AuthResult(AuthStatus.ERROR, null))
+                } else {
+                    callback.accept(AuthResult(AuthStatus.ERROR, ""))
                 }
             }
 
-            override fun onFailure(
-                call: Call<minicla03.coinquylife.DATALAYER.remote.AuthAPI.AuthResult?>?,
-                t: Throwable
-            ) {
+            override fun onFailure(call: Call<AuthResult?>, t: Throwable) {
                 t.printStackTrace()
-                callback.accept(AuthResult(AuthStatus.ERROR, null))
+                callback.accept(AuthResult(AuthStatus.ERROR, ""))
             }
         })
     }

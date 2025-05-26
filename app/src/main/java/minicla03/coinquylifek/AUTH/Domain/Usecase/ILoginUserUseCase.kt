@@ -1,8 +1,9 @@
 package minicla03.coinquylifek.AUTH.Domain.Usecase
 
-import minicla03.coinquylifek.DATALAYER.remote.AuthAPI.AuthResult
+import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
+import java.util.function.Consumer
 
 interface ILoginUserUseCase
 {
-    fun login(email: String?, password: String?, callback: java.util.function.Consumer<AuthResult?>)
+    suspend fun login(email: String?, password: String?, callback: Consumer<AuthResult?>)
 }

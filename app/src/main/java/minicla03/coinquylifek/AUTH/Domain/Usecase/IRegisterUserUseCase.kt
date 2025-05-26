@@ -1,8 +1,10 @@
 package minicla03.coinquylifek.AUTH.Domain.Usecase
 
-import minicla03.coinquylifek.DATALAYER.local.entity.User
+import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
+import minicla03.coinquylifek.AUTH.Domain.Model.User
+import java.util.function.Consumer
 
 interface IRegisterUserUseCase
 {
-    fun register(user: User?, callback: java.util.function.Consumer<AuthResult?>)
+    fun register(user: User?, callback: Consumer<AuthResult?>)
 }

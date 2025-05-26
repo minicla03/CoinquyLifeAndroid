@@ -1,6 +1,10 @@
 package minicla03.coinquylifek.AUTH.Data.Remote
 
-import android.telecom.Call
+import retrofit2.Call
+import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
+import minicla03.coinquylifek.AUTH.Domain.Model.User
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface AuthApi
 {
