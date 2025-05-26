@@ -1,6 +1,7 @@
 package minicla03.coinquylifek.AUTH.Presentation.ViewModel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,10 +26,10 @@ class AuthViewModel(application: Application) : ViewModel()
     private val registerUseCase: IRegisterUserUseCase
 
     private val _loginResult = MutableLiveData<AuthResult?>()
-    val loginResult: MutableLiveData<AuthResult?> get() = _loginResult
+    val loginResult: LiveData<AuthResult?> get() = _loginResult
 
     private val _registerResult = MutableLiveData<AuthResult?>()
-    val registerResult: MutableLiveData<AuthResult?> get() = _registerResult
+    val registerResult: LiveData<AuthResult?> get() = _registerResult
 
     init
     {
