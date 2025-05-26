@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
 import minicla03.coinquylifek.AUTH.Domain.Model.User
 import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModel
+import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModelFactory
 import minicla03.coinquylifek.R
 
 class RegisterFragment : Fragment()
@@ -38,7 +39,8 @@ class RegisterFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        val factory = AuthViewModelFactory(requireActivity().application)
+        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
         setupObservers()
         setupListeners()
     }
@@ -56,7 +58,7 @@ class RegisterFragment : Fragment()
     private fun setupObservers()
     {
         authViewModel.registerResult.observe(viewLifecycleOwner) { result ->
-            when (result.statusAuth)
+            when (result?.statusAuth)
             {
                 AuthStatus.SUCCESS -> {
                     val intent = Intent(context, LoginFragment::class.java)

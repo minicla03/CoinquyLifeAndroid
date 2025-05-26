@@ -9,4 +9,5 @@ enum class AuthStatus
     ALREADY_REGISTERED,
     INVALID_EMAIL,
     INVALID_PASSWORD,
+    USER_ALREADY_EXISTS,
 }

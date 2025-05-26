@@ -7,7 +7,7 @@ import minicla03.coinquylifek.AUTH.Domain.Model.User
 import minicla03.coinquylifek.AUTH.Domain.Repository.IAuthRepository
 import retrofit2.Call
 
-class AuthRepository(application: Application) : IAuthRepository
+class AuthRepository() : IAuthRepository
 {
     private val authRemoteDataSource: AuthRemoteDataSource = AuthRemoteDataSource()
 

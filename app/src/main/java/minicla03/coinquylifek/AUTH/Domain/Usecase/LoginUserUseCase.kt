@@ -1,6 +1,5 @@
 package minicla03.coinquylifek.AUTH.Domain.Usecase
 
-import androidx.core.content.ContentProviderCompat.requireContext
 import minicla03.coinquylifek.APP.TokenManager
 import retrofit2.Call
 import minicla03.coinquylifek.AUTH.Data.Response.AuthResult
@@ -11,7 +10,7 @@ import java.util.function.Consumer
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginUserUseCase(repository: IAuthRepository, private val executor: Executor, private val tokenManager: TokenManager) : ILoginUserUseCase
+class LoginUserUseCase(repository: IAuthRepository, private val tokenManager: TokenManager) : ILoginUserUseCase
 {
     private val repository: IAuthRepository = repository
 
@@ -26,9 +25,9 @@ class LoginUserUseCase(repository: IAuthRepository, private val executor: Execut
                 val authResult = response.body()
                 if (response.isSuccessful && authResult != null)
                 {
-                    if (authResult.getStatusAuth() == AuthStatus.SUCCESS)
+                    if (authResult.statusAuth == AuthStatus.SUCCESS)
                     {
-                        val token = authResult.getToken()
+                        val token = authResult.token
                         tokenManager.saveToken(token)
                         callback.accept(AuthResult(AuthStatus.SUCCESS, token))
                     }

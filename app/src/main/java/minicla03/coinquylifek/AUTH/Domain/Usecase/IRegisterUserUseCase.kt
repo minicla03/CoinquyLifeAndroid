@@ -6,5 +6,5 @@ import java.util.function.Consumer
 
 interface IRegisterUserUseCase
 {
-    fun register(user: User?, callback: Consumer<AuthResult?>)
+    suspend fun register(user: User?, callback: Consumer<AuthResult?>)
 }

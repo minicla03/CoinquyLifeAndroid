@@ -1,7 +1,6 @@
 package minicla03.coinquylifek.AUTH.Presentation.ViewModel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +17,6 @@ import minicla03.coinquylifek.AUTH.Domain.Repository.IAuthRepository
 import minicla03.coinquylifek.AUTH.Domain.Usecase.LoginUserUseCase
 import minicla03.coinquylifek.AUTH.Domain.Usecase.RegisterUserUseCase
 
-import java.util.concurrent.Executors
 import java.util.regex.Pattern
 
 class AuthViewModel(application: Application) : ViewModel()
@@ -26,19 +24,18 @@ class AuthViewModel(application: Application) : ViewModel()
     private val loginUseCase: ILoginUserUseCase
     private val registerUseCase: IRegisterUserUseCase
 
-    private val _loginResult = MutableLiveData<AuthResult>()
-    val loginResult: LiveData<AuthResult> get() = _loginResult
+    private val _loginResult = MutableLiveData<AuthResult?>()
+    val loginResult: MutableLiveData<AuthResult?> get() = _loginResult
 
-    private val _registerResult = MutableLiveData<AuthResult>()
-    val registerResult: LiveData<AuthResult> get() = _registerResult
+    private val _registerResult = MutableLiveData<AuthResult?>()
+    val registerResult: MutableLiveData<AuthResult?> get() = _registerResult
 
     init
     {
-        val repo: IAuthRepository = AuthRepository(application)
-        val executor = Executors.newSingleThreadExecutor()
+        val repo: IAuthRepository = AuthRepository()
         val tokenManager = TokenManager(application)
-        loginUseCase = LoginUserUseCase(repo, executor, tokenManager)
-        registerUseCase = RegisterUserUseCase(repo, executor)
+        loginUseCase = LoginUserUseCase(repo, tokenManager)
+        registerUseCase = RegisterUserUseCase(repo)
     }
 
     fun login(email: String?, password: String?)

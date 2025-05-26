@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
 import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModel
+import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModelFactory
 import minicla03.coinquylifek.R
 import minicla03.coinquylifek.HOUSE.Presentation.UI.CoinquyHouseSelectionActivity
 
@@ -36,7 +37,8 @@ class LoginFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        val factory = AuthViewModelFactory(requireActivity().application)
+        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
 
         btnLogin.setOnClickListener()
         {
@@ -47,7 +49,7 @@ class LoginFragment : Fragment()
         }
 
         authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            when (result.statusAuth)
+            when (result?.statusAuth)
             {
                 AuthStatus.SUCCESS -> {
                     val intent = Intent(requireActivity(), CoinquyHouseSelectionActivity::class.java)
