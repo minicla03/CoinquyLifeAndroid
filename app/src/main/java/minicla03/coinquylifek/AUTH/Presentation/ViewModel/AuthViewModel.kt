@@ -1,0 +1,77 @@
+package minicla03.coinquylifek.AUTH.Presentation.ViewModel
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import minicla03.coinquylifek.AUTH.Domain.Usecase.ILoginUserUseCase
+import minicla03.coinquylifek.AUTH.Domain.Usecase.IRegisterUserUseCase
+import minicla03.coinquylifek.Data.RepositoryEntity.AuthRepository
+import minicla03.coinquylifek.Data.local.entity.User
+import minicla03.coinquylifek.AUTH.Domain.Repository.IAuthRepository
+import minicla03.coinquylifek.AUTH.Domain.Usecase.LoginUserUseCase
+import minicla03.coinquylifek.AUTH.Domain.Usecase.RegisterUserUseCase
+import minicla03.coinquylifek.Data.remote.AuthAPI.AuthResult
+import minicla03.coinquylifek.Data.remote.AuthAPI.AuthStatus
+import java.util.concurrent.Executors
+import java.util.regex.Pattern
+
+class AuthViewModel(application: Application) : AndroidViewModel(application)
+{
+    private val loginUseCase: ILoginUserUseCase
+    private val registerUseCase: IRegisterUserUseCase
+
+    private val _loginResult = MutableLiveData<AuthResult>()
+    val loginResult: LiveData<AuthResult> get() = _loginResult
+
+    private val _registerResult = MutableLiveData<AuthResult>()
+    val registerResult: LiveData<AuthResult> get() = _registerResult
+
+    init
+    {
+        val repo: IAuthRepository = AuthRepository(application)
+        val executor = Executors.newSingleThreadExecutor()
+        loginUseCase = LoginUserUseCase(repo, executor)
+        registerUseCase = RegisterUserUseCase(repo, executor)
+    }
+
+    fun login(email: String?, password: String?)
+    {
+        if (isInvalidEmail(email))
+        {
+            _loginResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, null))
+            return
+        }
+
+        if (password == null)
+        {
+            _loginResult.postValue(AuthResult(AuthStatus.INVALID_PASSWORD, null))
+            return
+        }
+        loginUseCase.login(email!!, password) { result ->
+            _loginResult.postValue(result)
+        }
+    }
+
+    fun register(user: User)
+    {
+        if (isInvalidEmail(user.email))
+        {
+            _registerResult.postValue(AuthResult(AuthStatus.INVALID_EMAIL, null))
+            return
+        }
+
+        registerUseCase.register(user) { result ->
+            _registerResult.postValue(result)
+        }
+    }
+
+    private fun isInvalidEmail(email: String?): Boolean
+    {
+        if (email == null) return true
+        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        val pattern = Pattern.compile(emailRegex)
+        val matcher = pattern.matcher(email)
+        return !matcher.matches()
+    }
+}
