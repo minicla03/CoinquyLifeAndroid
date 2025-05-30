@@ -10,11 +10,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import minicla03.coinquylifek.AUTH.Data.Response.AuthStatus
-import minicla03.coinquylifek.AUTH.Domain.Model.User
-import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModel
-import minicla03.coinquylifek.AUTH.Presentation.ViewModel.AuthViewModelFactory
-import minicla03.coinquylifek.R
+import minicla03.coiquylife.authentication.Domain.Model.User
+import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModel
+import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModelFactory
+import minicla03.coiquylife.authentication.R
+import minicla03.coiquylife.authentication.Data.Response.AuthStatus
 
 class RegisterFragment : Fragment()
 {

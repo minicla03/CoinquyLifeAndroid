@@ -1,23 +1,23 @@
 package minicla03.coiquylife.authentication.Data.Remote
 
 import minicla03.coinquylifek.APP.ApiService
+import minicla03.coiquylife.authentication.Data.IDataSource
 import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
-import retrofit2.Call
 
-class AuthRemoteDataSource
+class AuthRemoteDataSource: IDataSource
 {
     private val apiEndpoints = ApiService.createService(
         AuthApi::class.java,
         tokenProvider = { null }
     )
     
-    fun login(email: String, password: String): Call<AuthResult?>?
+    override suspend fun login(email: String, password: String): AuthResult
     {
-        return apiEndpoints.login(email, password)  
+        return apiEndpoints.login(email, password)
     }
 
-    fun register(user: User): Call<AuthResult?>?
+    override suspend fun register(user: User): AuthResult
     {
         return apiEndpoints.register(user)
     }

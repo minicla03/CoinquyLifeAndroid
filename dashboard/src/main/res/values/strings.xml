@@ -5,4 +5,5 @@
     <string name="home">🏠 Home</string>
     <string name="rank">🏆 Classifica</string>
     <string name="board">📋 Bacheca</string>
+    <string name="profile_picture">Profile picture</string>
 </resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ProfileSetting</string>
+    <string name="setting">Setting</string>
+    <string name="people">people\n</string>
+    <string name="description">Descrizione</string>
+    <string name="points">Punti</string>
+</resources>

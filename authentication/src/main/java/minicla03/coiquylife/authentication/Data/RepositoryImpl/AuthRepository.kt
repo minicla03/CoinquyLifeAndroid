@@ -4,18 +4,18 @@ import minicla03.coiquylife.authentication.Data.Remote.AuthRemoteDataSource
 import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.Domain.Repository.IAuthRepository
-import retrofit2.Call
 
 class AuthRepository() : IAuthRepository
 {
     private val authRemoteDataSource: AuthRemoteDataSource = AuthRemoteDataSource()
+    //private val authLocalDataSource: AuthLocalDataSource = AuthLocalDataSource()
 
-    override suspend fun login(usernameOrEmail: String, password: String): Call<AuthResult?>?
+    override suspend fun login(usernameOrEmail: String?, password: String?): AuthResult
     {
         return authRemoteDataSource.login(usernameOrEmail, password)
     }
 
-    override suspend fun register(user: User): Call<AuthResult?>?
+    override suspend fun register(user: User): AuthResult
     {
         return authRemoteDataSource.register(user)
     }

@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/dashboard" />
             <option value="$PROJECT_DIR$/expense" />
             <option value="$PROJECT_DIR$/houseselection" />
+            <option value="$PROJECT_DIR$/profilesetting" />
             <option value="$PROJECT_DIR$/shift" />
           </set>
         </option>
