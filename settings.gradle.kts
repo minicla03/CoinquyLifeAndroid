@@ -20,5 +20,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CoinquyLifeK"
-include(":app")
- 
+include(":core")
+include(":authentication")
+include(":houseselection")
+include(":dashboard")
+include(":expense")
+include(":shift")

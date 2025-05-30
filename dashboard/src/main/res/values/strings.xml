@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Dashboard</string>
+    <string name="turni">🗓️ Turni</string>
+    <string name="Exspese">💸 Spese</string>
+    <string name="home">🏠 Home</string>
+    <string name="rank">🏆 Classifica</string>
+    <string name="board">📋 Bacheca</string>
+</resources>

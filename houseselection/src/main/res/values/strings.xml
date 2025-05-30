@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HouseSelection</string>
+    <string name="inserisci_id_della_casa">Inserisci l\'id della casa</string>
+    <string name="id_house">Id casa</string>
+    <string name="Confirm">Conferma\n</string>
+    <string name="copy_id">btn_copy\n</string>
+    <string name="house_name">CoinquyHouse name</string>
+</resources>
