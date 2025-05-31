@@ -7,6 +7,6 @@ sealed class AuthStatus {
     object INVALID_EMAIL : AuthStatus()
     object INVALID_PASSWORD : AuthStatus()
     object USER_ALREADY_EXISTS : AuthStatus()
-
-    data class ERROR(val message: String) : AuthStatus()
+    object UNAUTHORIZED : AuthStatus()
+    object ERROR : AuthStatus()
 }

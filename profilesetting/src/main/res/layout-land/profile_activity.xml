@@ -3,45 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8A2BE2">
+    android:background="#8A2BE2"
+    android:padding="16dp">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/arrow_back"
+        app:icon="@drawable/arrow_back"
+        app:iconGravity="textStart"
+        android:tint="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/rounded_topbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/toolbar_profile"
-        app:navigationIcon="@drawable/arrow_back"
-        app:title="CoinquyLife"
-        app:titleTextColor="#8A2BE2" />
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSettings"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/setting"
+        app:icon="@drawable/setting_icon"
+        app:iconGravity="textStart"
+        android:tint="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="147dp"
-        android:layout_height="144dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="146dp"
+        android:layout_height="143dp"
+        android:layout_marginBottom="40dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo_app_blu"
         app:layout_constraintBottom_toTopOf="@+id/mainContainer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/mainContainer"
-        android:layout_width="325dp"
-        android:layout_height="329dp"
+        android:layout_width="304dp"
+        android:layout_height="321dp"
         android:background="@drawable/rounded_container"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.293">
 
         <ImageView
             android:id="@+id/imgProfile"
@@ -142,12 +157,11 @@
         android:id="@+id/imgPeople"
         android:layout_width="283dp"
         android:layout_height="195dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="164dp"
         android:contentDescription="@string/people"
         android:src="@drawable/people"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.968"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mainContainer">
-    </ImageView>
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

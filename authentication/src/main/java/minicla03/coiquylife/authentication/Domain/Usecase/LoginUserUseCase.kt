@@ -1,32 +1,34 @@
 package minicla03.coiquylife.authentication.Domain.Usecase
 
 import com.coinquyteam.authApplication.Utility.AuthStatus
-import minicla03.coinquylifek.APP.security.TokenManager
+import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.domain.repository.IAuthRepository
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 class LoginUserUseCase @Inject constructor(
     private val repository: IAuthRepository,
-    private val tokenManager: TokenManager
 ): ILoginUserUseCase{
-    override suspend fun login(user: User, callback: (AuthStatus) -> Unit) {
-        try {
-            val response = repository.login(user)
-            val result = response.body()
-
-            when (result?.statusAuth) {
-                AuthStatus.SUCCESS  -> {
-                    result.token.let { tokenManager.saveToken(it) }
-                    callback(AuthStatus.SUCCESS)
-                }
-                AuthStatus.USER_NOT_FOUND -> callback(AuthStatus.USER_NOT_FOUND)
-                AuthStatus.INVALID_CREDENTIALS -> callback(AuthStatus.INVALID_CREDENTIALS)
-                null -> callback(AuthStatus.ERROR("Nessuna risposta dal server"))
-                else -> callback(AuthStatus.ERROR("Errore sconosciuto"))
-            }
-        } catch (e: Exception) {
-            callback(AuthStatus.ERROR("Errore di rete o interno: ${e.localizedMessage ?: "sconosciuto"}"))
+    override suspend fun login(email: String, password: String, callback: (AuthResult) -> Unit)
+    {
+        if (isInvalidEmail(email)) {
+            callback(AuthResult(AuthStatus.INVALID_EMAIL, "Email non valido"))
         }
+
+        val user = User(email,password)
+        try
+        {
+            callback(repository.login(user))
+        }
+        catch (e: Exception) {
+            callback(AuthResult(AuthStatus.ERROR, e.localizedMessage ?: "sconosciuto"))
+        }
+    }
+
+    private fun isInvalidEmail(email: String?): Boolean {
+        if (email == null) return true
+        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        return !Pattern.matches(emailRegex, email)
     }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Frequenza Notifiche -->
+    <string-array name="notification_frequency_entries">
+        <item>Ogni giorno</item>
+        <item>Ogni 3 giorni</item>
+        <item>Ogni settimana</item>
+    </string-array>
+
+    <string-array name="notification_frequency_values">
+        <item>daily</item>
+        <item>every_3_days</item>
+        <item>weekly</item>
+    </string-array>
+
+    <!-- Opzioni Tema -->
+    <string-array name="theme_options">
+        <item>Chiaro</item>
+        <item>Scuro</item>
+        <item>Sistema</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>system</item>
+    </string-array>
+
+</resources>

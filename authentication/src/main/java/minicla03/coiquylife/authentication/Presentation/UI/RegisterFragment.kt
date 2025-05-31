@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.coinquyteam.authApplication.Utility.AuthStatus
 import dagger.hilt.android.AndroidEntryPoint
-import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModel
 import minicla03.coiquylife.authentication.R
 
@@ -70,38 +69,29 @@ class RegisterFragment : Fragment() {
             Toast.makeText(context, "Tutti i campi sono obbligatori", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val user = User(
-            username = username,
-            password = password,
-            surname = surname,
-            email = email,
-            usernameOrEmail = username
-        )
-
-        authViewModel.register(user)
+        authViewModel.register(username, email, password, name, surname)
     }
 
     private fun setupObservers() {
-        authViewModel.registerStatus.observe(viewLifecycleOwner) { status ->
-            when (status) {
+        authViewModel.registerStatus.observe(viewLifecycleOwner) { result ->
+            when (result.statusAuth) {
                 AuthStatus.SUCCESS -> {
-                    Toast.makeText(context, "Registrazione completata", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, result.token, Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), LoginFragment::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }
                 AuthStatus.USER_ALREADY_EXISTS -> {
-                    Toast.makeText(context, "Utente già registrato", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, result.token, Toast.LENGTH_SHORT).show()
                 }
                 AuthStatus.INVALID_EMAIL -> {
-                    Toast.makeText(context, "Email non valida", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, result.token, Toast.LENGTH_SHORT).show()
                 }
                 is AuthStatus.ERROR -> {
-                    Toast.makeText(context, "Errore: ${status.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, result.token, Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    Toast.makeText(context, "Errore sconosciuto", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, result.token, Toast.LENGTH_SHORT).show()
                 }
             }
         }

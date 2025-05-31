@@ -1,8 +1,8 @@
 package minicla03.coiquylife.authentication.Domain.Usecase
 
-import com.coinquyteam.authApplication.Utility.AuthStatus
-import minicla03.coiquylife.authentication.Domain.Model.User
+import minicla03.coiquylife.authentication.Data.Response.AuthResult
 
-interface IRegisterUserUseCase {
-    suspend fun register(user: User, callback: (AuthStatus) -> Unit)
+interface IRegisterUserUseCase
+{
+    suspend fun register(username: String, email: String, password: String, name: String, surname: String, callback: (AuthResult) -> Unit)
 }

@@ -4,4 +4,8 @@
     <string name="people">people\n</string>
     <string name="description">Descrizione</string>
     <string name="points">Punti</string>
+    <string name="username_default">username_default</string>
+    <string name="position">Position</string>
+    <string name="classifica">Classifica</string>
+    <string name="arrow_back">Arrow back</string>
 </resources>

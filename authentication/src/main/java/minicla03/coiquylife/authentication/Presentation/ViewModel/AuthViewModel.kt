@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.coinquyteam.authApplication.Utility.AuthStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.Domain.Usecase.ILoginUserUseCase
 import minicla03.coiquylife.authentication.Domain.Usecase.IRegisterUserUseCase
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,47 +18,27 @@ class AuthViewModel @Inject constructor(
     private val registerUseCase: IRegisterUserUseCase,
 ) : ViewModel() {
 
-    private val _loginStatus = MutableLiveData<AuthStatus>()
-    val loginStatus: LiveData<AuthStatus> get() = _loginStatus
+    private val _loginStatus = MutableLiveData<AuthResult>()
+    val loginStatus: LiveData<AuthResult> get() = _loginStatus
 
-    private val _registerStatus = MutableLiveData<AuthStatus>()
-    val registerStatus: LiveData<AuthStatus> get() = _registerStatus
+    private val _registerStatus = MutableLiveData<AuthResult>()
+    val registerStatus: LiveData<AuthResult> get() = _registerStatus
 
-    fun login(email: String?, password: String?) {
-        if (isInvalidEmail(email)) {
-            _loginStatus.postValue(AuthStatus.INVALID_CREDENTIALS)
-            return
-        }
-
-        if (password.isNullOrBlank()) {
-            _loginStatus.postValue(AuthStatus.INVALID_PASSWORD)
-            return
-        }
-
+    fun login(email: String, password: String)
+    {
         viewModelScope.launch {
-            val user = User(username = email ?: "", password = password)
-            loginUseCase.login(user) { result: AuthStatus ->
+            loginUseCase.login(email, password) { result: AuthResult ->
                 _loginStatus.postValue(result)
             }
         }
     }
 
-    fun register(user: User) {
-        if (isInvalidEmail(user.email)) {
-            _registerStatus.postValue(AuthStatus.INVALID_EMAIL)
-            return
-        }
-
+    fun register(username: String, email: String, password: String, name: String, surname: String)
+    {
         viewModelScope.launch {
-            registerUseCase.register(user) { result: AuthStatus ->
+            registerUseCase.register(username, email, password, name, surname) { result: AuthResult ->
                 _registerStatus.postValue(result)
             }
         }
-    }
-
-    private fun isInvalidEmail(email: String?): Boolean {
-        if (email == null) return true
-        val emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-        return !Pattern.matches(emailRegex, email)
     }
 }

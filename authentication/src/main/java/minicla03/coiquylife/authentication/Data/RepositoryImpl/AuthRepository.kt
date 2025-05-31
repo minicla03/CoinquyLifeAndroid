@@ -1,22 +1,25 @@
 package minicla03.coiquylife.authentication.Data.RepositoryImpl
 
+import minicla03.coinquylifek.APP.security.TokenManager
 import minicla03.coiquylife.authentication.Data.Remote.AuthRemoteDataSource
 import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.domain.repository.IAuthRepository
-import retrofit2.Response
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
-private val authRemoteDataSource: AuthRemoteDataSource
+    private val authRemoteDataSource: AuthRemoteDataSource,
+    private val tokenManager: TokenManager
 ) : IAuthRepository
 {
-    override suspend fun login(user: User): Response<AuthResult>
+    override suspend fun login(user: User): AuthResult
     {
-        return authRemoteDataSource.login(user)
+        val authResult = authRemoteDataSource.login(user)
+        tokenManager.saveToken(authResult.token)
+        return authResult
     }
 
-    override suspend fun register(user: User): Response<AuthResult>
+    override suspend fun register(user: User): AuthResult
     {
         return authRemoteDataSource.register(user)
     }

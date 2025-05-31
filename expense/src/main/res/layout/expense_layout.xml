@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.houseexpenses.presentation.addexpense.AddExpenseFragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+
+    <fragment
+        android:id="@+id/expensesListFragment"
+        android:name="com.example.houseexpenses.presentation.expenselist.ExpensesListFragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+
+    <fragment
+        android:id="@+id/debtsFragment"
+        android:name="com.example.houseexpenses.presentation.debts.DebtsFragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+</LinearLayout>

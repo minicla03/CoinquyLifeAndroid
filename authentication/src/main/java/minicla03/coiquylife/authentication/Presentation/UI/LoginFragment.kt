@@ -40,6 +40,10 @@ class LoginFragment : Fragment()
             super.onViewCreated(view, savedInstanceState)
 
             btnLogin.setOnClickListener {
+                if (etEmail.text.isNullOrBlank() || etPassword.text.isNullOrBlank()) {
+                    Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 val email = etEmail.text.toString().trim()
                 val password = etPassword.text.toString()
                 authViewModel.login(email, password)
@@ -54,16 +58,16 @@ class LoginFragment : Fragment()
                         requireActivity().finish()
                     }
                     AuthStatus.INVALID_PASSWORD -> {
-                        Toast.makeText(context, "Password errata!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, status.token, Toast.LENGTH_SHORT).show()
                     }
                     AuthStatus.USER_NOT_FOUND -> {
-                        Toast.makeText(context, "User not found!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, status.token, Toast.LENGTH_SHORT).show()
                     }
                     AuthStatus.INVALID_EMAIL -> {
-                        Toast.makeText(context, "Email non valida!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, status.token, Toast.LENGTH_SHORT).show()
                     }
                     else -> {
-                        Toast.makeText(context, "Login fallito!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, status.token, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

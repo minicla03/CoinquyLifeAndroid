@@ -10,11 +10,11 @@ data class User(
     val usernameOrEmail: String
 ){
 
-    constructor(username: String, password: String) : this(
-        username = username,
+    constructor(email: String, password: String) : this(
+        username = "",
         password = password,
         surname = "",
-        email = "",
+        email = email,
         profileImage = null,
         houseUser = null,
         usernameOrEmail = ""

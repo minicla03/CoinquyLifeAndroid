@@ -51,7 +51,7 @@ class JoinCoinquyHouseFragment : Fragment() {
                 is HouseStatus.LINKED_SUCCES -> {
                     val intent = Intent(requireActivity(), DashboardActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        putExtra("coinquyHouseId", result.message) //TODO
+                        putExtra("coinquyHouseId", etHouseID.text.toString().trim())
                     }
                     startActivity(intent)
                 }
@@ -65,7 +65,7 @@ class JoinCoinquyHouseFragment : Fragment() {
                     Toast.makeText(requireContext(), "User already linked to a house", Toast.LENGTH_SHORT).show()
                 }
                 is HouseStatus.HOUSE_NOT_CREATED -> {
-                    Toast.makeText(requireContext(), "Error joining house: ${result.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error joining house", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
                     Toast.makeText(requireContext(), "Error joining house", Toast.LENGTH_SHORT).show()
