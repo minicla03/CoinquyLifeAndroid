@@ -1,9 +1,9 @@
 package minicla03.coiquylife.authentication.Domain.Usecase
 
-import minicla03.coiquylife.authentication.Data.Response.AuthResult
-import java.util.function.Consumer
+import com.coinquyteam.authApplication.Utility.AuthStatus
+import minicla03.coiquylife.authentication.Domain.Model.User
 
 interface ILoginUserUseCase
 {
-    suspend fun login(email: String?, password: String?, callback: Consumer<AuthResult?>)
+    suspend fun login(user: User, callback: (AuthStatus) -> Unit)
 }

@@ -1,13 +1,12 @@
-package minicla03.coiquylife.authentication.Data.Response
+package com.coinquyteam.authApplication.Utility
 
-enum class AuthStatus
-{
-    SUCCESS,
-    USER_NOT_FOUND,
-    WRONG_PASSWORD,
-    ERROR,
-    ALREADY_REGISTERED,
-    INVALID_EMAIL,
-    INVALID_PASSWORD,
-    USER_ALREADY_EXISTS,
+sealed class AuthStatus {
+    object SUCCESS : AuthStatus()
+    object USER_NOT_FOUND : AuthStatus()
+    object INVALID_CREDENTIALS : AuthStatus()
+    object INVALID_EMAIL : AuthStatus()
+    object INVALID_PASSWORD : AuthStatus()
+    object USER_ALREADY_EXISTS : AuthStatus()
+
+    data class ERROR(val message: String) : AuthStatus()
 }

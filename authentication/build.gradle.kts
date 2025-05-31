@@ -46,7 +46,9 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":houseselection"))
+    implementation(libs.hilt.android.v248)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.okhttp)
     implementation(libs.retrofit)

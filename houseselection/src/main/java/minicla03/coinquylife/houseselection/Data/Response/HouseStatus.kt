@@ -1,20 +1,30 @@
 package minicla03.coinquylife.houseselection.Data.Response
 
-enum class HouseStatus
+sealed class HouseStatus
 {
-    HOUSE_CREATED,
-    HOUSE_NOT_FOUND,
-    INVALID_CREDENTIALS,
-    HOUSE_ALREADY_EXISTS,
-    TOKEN_EXPIRED,
-    TOKEN_INVALID,
-    HOUSE_LOGGED_IN,
-    HOUSE_NOT_CREATED,
-    LINKED_SUCCES,
-    USER_NOT_FOUND,
-    LINKED_ERROR,
-    HOUSE_DELETED,
-    HOUSE_FOUND,
-    USER_ALREADY_LINKED,
-    INVALID_INPUT
+    object INVALID_INPUT : HouseStatus()
+    object ERROR : HouseStatus()
+    object HOUSE_ALREADY_EXISTS : HouseStatus() {
+
+    }
+
+    object HOUSE_NOT_CREATED : HouseStatus() {
+
+    }
+
+    object LINKED_SUCCES : HouseStatus() {
+
+    }
+
+    object USER_NOT_FOUND : HouseStatus() {
+
+    }
+
+    object HOUSE_NOT_FOUND : HouseStatus() {
+
+    }
+
+    object USER_ALREADY_LINKED : HouseStatus() {
+
+    }
 }

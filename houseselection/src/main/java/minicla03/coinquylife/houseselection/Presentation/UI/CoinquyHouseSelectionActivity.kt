@@ -5,13 +5,15 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import minicla03.coinquylifek.R
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import minicla03.coinquylife.houseselection.R
 import minicla03.coinquylife.houseselection.Presentation.ViewModel.SelectHouseViewModel
 
+@AndroidEntryPoint
 class CoinquyHouseSelectionActivity : AppCompatActivity()
 {
-    private lateinit var selectHouseViewModel: SelectHouseViewModel
+    private val selectHouseViewModel: SelectHouseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -23,8 +25,6 @@ class CoinquyHouseSelectionActivity : AppCompatActivity()
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         supportActionBar?.hide()
-
-        selectHouseViewModel = ViewModelProvider(this)[SelectHouseViewModel::class.java]
 
         val btnCreateGroup: View = findViewById(R.id.btnCreateGroup)
         val btnJoinGroup: View = findViewById(R.id.btnJoinGroup)

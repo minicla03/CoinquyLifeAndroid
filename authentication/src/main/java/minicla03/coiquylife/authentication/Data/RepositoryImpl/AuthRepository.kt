@@ -3,19 +3,20 @@ package minicla03.coiquylife.authentication.Data.RepositoryImpl
 import minicla03.coiquylife.authentication.Data.Remote.AuthRemoteDataSource
 import minicla03.coiquylife.authentication.Data.Response.AuthResult
 import minicla03.coiquylife.authentication.Domain.Model.User
-import minicla03.coiquylife.authentication.Domain.Repository.IAuthRepository
+import minicla03.coiquylife.authentication.domain.repository.IAuthRepository
+import retrofit2.Response
+import javax.inject.Inject
 
-class AuthRepository() : IAuthRepository
+class AuthRepository @Inject constructor(
+private val authRemoteDataSource: AuthRemoteDataSource
+) : IAuthRepository
 {
-    private val authRemoteDataSource: AuthRemoteDataSource = AuthRemoteDataSource()
-    //private val authLocalDataSource: AuthLocalDataSource = AuthLocalDataSource()
-
-    override suspend fun login(usernameOrEmail: String?, password: String?): AuthResult
+    override suspend fun login(user: User): Response<AuthResult>
     {
-        return authRemoteDataSource.login(usernameOrEmail, password)
+        return authRemoteDataSource.login(user)
     }
 
-    override suspend fun register(user: User): AuthResult
+    override suspend fun register(user: User): Response<AuthResult>
     {
         return authRemoteDataSource.register(user)
     }

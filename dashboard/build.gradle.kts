@@ -48,4 +48,8 @@ dependencies {
     implementation(project(":shift"))
     implementation(project(":profilesetting"))
     implementation(project(":expense"))
+
+    implementation(libs.hilt.android.v248)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
 }

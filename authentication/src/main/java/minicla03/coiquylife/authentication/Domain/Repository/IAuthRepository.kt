@@ -1,11 +1,11 @@
-package minicla03.coiquylife.authentication.Domain.Repository
+package minicla03.coiquylife.authentication.domain.repository
 
-import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.Data.Response.AuthResult
+import minicla03.coiquylife.authentication.Domain.Model.User
+import retrofit2.Response
 
 interface IAuthRepository
 {
-    suspend fun login(usernameOrEmail: String?, password: String?): AuthResult
-
-    suspend fun register(user: User): AuthResult
+    suspend fun login(user: User): Response<AuthResult>
+    suspend fun register(user: User): Response<AuthResult>
 }

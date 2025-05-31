@@ -1,9 +1,9 @@
-package minicla03.coinquylifek.APP
+package minicla03.coinquylifek.APP.security
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import androidx.core.content.edit
 
 class TokenManager(context: Context)
 {

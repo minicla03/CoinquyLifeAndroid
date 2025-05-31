@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -51,4 +53,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.security.crypto)
 
+    implementation(libs.hilt.android.v2562)
+    ksp(libs.hilt.android.compiler)
 }

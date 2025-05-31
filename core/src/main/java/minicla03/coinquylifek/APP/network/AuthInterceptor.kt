@@ -1,4 +1,4 @@
-package minicla03.coinquylifek.APP
+package minicla03.coinquylifek.APP.network
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -20,4 +20,3 @@ class AuthInterceptor(private val tokenProvider: suspend () -> String?) : Interc
         return chain.proceed(modifiedRequest)
     }
 }
-

@@ -5,4 +5,12 @@
     <string name="Confirm">Conferma\n</string>
     <string name="copy_id">btn_copy\n</string>
     <string name="house_name">CoinquyHouse name</string>
+    <string name="new_coinquy_house">Crea CoinquyHouse</string>
+    <string name="join_to_coinquy_house">Join CoinquyHouse</string>
+    <string name="coinquyhouse_id">CoiquyLife</string>
+    <string name="id">Id</string>
+    <string name="insert_address">Inserisci la via</string>
+    <string name="create_house">Crea la CoinquyHouse</string>
+    <string name="login_icon_description">logo app</string>
+    <string name="nameAPP">CoiquyLife</string>
 </resources>

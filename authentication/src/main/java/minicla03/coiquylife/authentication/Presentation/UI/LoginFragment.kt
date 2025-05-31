@@ -8,67 +8,66 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import com.coinquyteam.authApplication.Utility.AuthStatus
+import dagger.hilt.android.AndroidEntryPoint
 import minicla03.coiquylife.authentication.R
-import minicla03.coiquylife.authentication.Data.Response.AuthStatus
 import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModel
-import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModelFactory
 
+@AndroidEntryPoint
 class LoginFragment : Fragment()
 {
-    private lateinit var authViewModel: AuthViewModel
-    private lateinit var etEmail: TextView
-    private lateinit var etPassword: TextView
-    private lateinit var btnLogin: View
+    @AndroidEntryPoint
+    class LoginFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_login_layout, container, false)
-        etEmail = view.findViewById(R.id.editTextUsernameEmail)
-        etPassword = view.findViewById(R.id.editTextPassword)
-        btnLogin = view.findViewById(R.id.buttonLogin)
-        return view
-    }
+        private val authViewModel: AuthViewModel by viewModels()
+        private lateinit var etEmail: TextView
+        private lateinit var etPassword: TextView
+        private lateinit var btnLogin: View
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
-        super.onViewCreated(view, savedInstanceState)
-
-        val factory = AuthViewModelFactory(requireActivity().application)
-        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-
-        btnLogin.setOnClickListener()
-        {
-            val email = etEmail.text.toString().trim()
-            val password = etPassword.text.toString()
-
-            authViewModel.login(email, password)
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val view = inflater.inflate(R.layout.fragment_login_layout, container, false)
+            etEmail = view.findViewById(R.id.editTextUsernameEmail)
+            etPassword = view.findViewById(R.id.editTextPassword)
+            btnLogin = view.findViewById(R.id.buttonLogin)
+            return view
         }
 
-        authViewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            when (result?.statusAuth)
-            {
-                AuthStatus.SUCCESS -> {
-                    val intent = Intent(requireActivity(), minicla03.coinquylife.houseselection.Presentation.UI.CoinquyHouseSelectionActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-                AuthStatus.WRONG_PASSWORD -> {
-                    Toast.makeText(context, "Password errata!", Toast.LENGTH_SHORT).show()
-                }
-                AuthStatus.USER_NOT_FOUND -> {
-                    Toast.makeText(context, "User not found!", Toast.LENGTH_SHORT).show()
-                }
-                AuthStatus.INVALID_EMAIL -> {
-                    Toast.makeText(context, "Email non valida!", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(context, "Login fallito!", Toast.LENGTH_SHORT).show()
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+            btnLogin.setOnClickListener {
+                val email = etEmail.text.toString().trim()
+                val password = etPassword.text.toString()
+                authViewModel.login(email, password)
+            }
+
+            authViewModel.loginStatus.observe(viewLifecycleOwner) { status ->
+                when (status) {
+                    AuthStatus.SUCCESS -> {
+                        val intent = Intent(requireActivity(), minicla03.coinquylife.houseselection.Presentation.UI.CoinquyHouseSelectionActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
+                    AuthStatus.INVALID_PASSWORD -> {
+                        Toast.makeText(context, "Password errata!", Toast.LENGTH_SHORT).show()
+                    }
+                    AuthStatus.USER_NOT_FOUND -> {
+                        Toast.makeText(context, "User not found!", Toast.LENGTH_SHORT).show()
+                    }
+                    AuthStatus.INVALID_EMAIL -> {
+                        Toast.makeText(context, "Email non valida!", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        Toast.makeText(context, "Login fallito!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
     }
+
 }

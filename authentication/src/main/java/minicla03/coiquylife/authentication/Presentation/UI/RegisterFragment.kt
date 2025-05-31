@@ -9,16 +9,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import com.coinquyteam.authApplication.Utility.AuthStatus
+import dagger.hilt.android.AndroidEntryPoint
 import minicla03.coiquylife.authentication.Domain.Model.User
 import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModel
-import minicla03.coiquylife.authentication.Presentation.ViewModel.AuthViewModelFactory
 import minicla03.coiquylife.authentication.R
-import minicla03.coiquylife.authentication.Data.Response.AuthStatus
 
-class RegisterFragment : Fragment()
-{
-    private lateinit var authViewModel: AuthViewModel
+
+@AndroidEntryPoint
+class RegisterFragment : Fragment() {
+
+    private val authViewModel: AuthViewModel by viewModels()
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -30,23 +32,19 @@ class RegisterFragment : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_register_layout, container, false)
         initializeUI(view)
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val factory = AuthViewModelFactory(requireActivity().application)
-        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
         setupObservers()
         setupListeners()
     }
 
-    private fun initializeUI(view: View)
-    {
+    private fun initializeUI(view: View) {
         emailEditText = view.findViewById(R.id.etEmail)
         passwordEditText = view.findViewById(R.id.etPassword)
         nameEditText = view.findViewById(R.id.etNome)
@@ -55,46 +53,57 @@ class RegisterFragment : Fragment()
         registerButton = view.findViewById(R.id.btnRegister)
     }
 
-    private fun setupObservers()
-    {
-        authViewModel.registerResult.observe(viewLifecycleOwner) { result ->
-            when (result?.statusAuth)
-            {
-                AuthStatus.SUCCESS -> {
-                    val intent = Intent(context, minicla03.coiquylife.authentication.Presentation.UI.LoginFragment::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                }
-                AuthStatus.ALREADY_REGISTERED -> {
-                    Toast.makeText(context, "User already exist", Toast.LENGTH_SHORT).show()
-                }
-                AuthStatus.INVALID_EMAIL -> {
-                    Toast.makeText(context, "Invalid email", Toast.LENGTH_SHORT).show()
-                }
-                AuthStatus.ERROR -> {
-                    Toast.makeText(context, "Registration failed", Toast.LENGTH_SHORT).show()
-                }
-                else -> { /* no-op */ }
-            }
-        }
-    }
-
-    private fun setupListeners()
-    {
+    private fun setupListeners() {
         registerButton.setOnClickListener {
             attemptRegistration()
         }
     }
 
-    private fun attemptRegistration()
-    {
+    private fun attemptRegistration() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
         val name = nameEditText.text.toString().trim()
         val surname = surnameEditText.text.toString().trim()
         val username = usernameEditText.text.toString().trim()
 
-        val user = User(username, name, password, surname, email)
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || surname.isEmpty() || username.isEmpty()) {
+            Toast.makeText(context, "Tutti i campi sono obbligatori", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val user = User(
+            username = username,
+            password = password,
+            surname = surname,
+            email = email,
+            usernameOrEmail = username
+        )
+
         authViewModel.register(user)
+    }
+
+    private fun setupObservers() {
+        authViewModel.registerStatus.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                AuthStatus.SUCCESS -> {
+                    Toast.makeText(context, "Registrazione completata", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), LoginFragment::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+                AuthStatus.USER_ALREADY_EXISTS -> {
+                    Toast.makeText(context, "Utente già registrato", Toast.LENGTH_SHORT).show()
+                }
+                AuthStatus.INVALID_EMAIL -> {
+                    Toast.makeText(context, "Email non valida", Toast.LENGTH_SHORT).show()
+                }
+                is AuthStatus.ERROR -> {
+                    Toast.makeText(context, "Errore: ${status.message}", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(context, "Errore sconosciuto", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
