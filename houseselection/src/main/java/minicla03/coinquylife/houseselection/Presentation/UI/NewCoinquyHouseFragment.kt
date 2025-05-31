@@ -71,7 +71,6 @@ class NewCoinquyHouseFragment : Fragment() {
                 is HouseStatus.LINKED_SUCCES -> {
                     val intent = Intent(requireActivity(), DashboardActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        putExtra("coinquyhouseID", textViewID.text.toString())
                     }
                     startActivity(intent)
                 }

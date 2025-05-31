@@ -3,10 +3,12 @@ package minicla03.coinquylife.expense.Data.repositoryImp
 import minicla03.coinquylife.expense.Data.remote.ExpenseRemoteDataSource
 import minicla03.coinquylife.expense.Domain.model.Expense
 import minicla03.coinquylife.expense.Domain.repository.IExpenseRepository
+import minicla03.coinquylifek.APP.security.TokenManager
 import javax.inject.Inject
 
 class ExpenseRepository @Inject constructor(
-    private val expenseRemoteDataSource: ExpenseRemoteDataSource
+    private val expenseRemoteDataSource: ExpenseRemoteDataSource,
+    private val tokenManager: TokenManager
 ) : IExpenseRepository
 {
     override suspend fun createExpense(expense: Expense) = expenseRemoteDataSource.createExpense(expense)
@@ -16,4 +18,6 @@ class ExpenseRepository @Inject constructor(
     override suspend fun calculateDebt(body: Map<String, String>) = expenseRemoteDataSource.calculateDebt(body)?.debts
 
     override suspend fun updateExpenseStatus(body: String) = expenseRemoteDataSource.updateExpenseStatus(body)
+
+    suspend fun getUser(): String? = expenseRemoteDataSource.getUser(tokenManager.getToken())
 }

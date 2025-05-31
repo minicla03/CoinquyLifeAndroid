@@ -7,7 +7,7 @@ interface IExpenseRepository
 {
     suspend fun createExpense(expense: Expense): ExpenseResult?
 
-    suspend fun getAllExpenses(houseId: String): Any?
+    suspend fun getAllExpenses(houseId: String): List<Expense>?
 
     suspend fun calculateDebt(body: Map<String, String>): Any?
 

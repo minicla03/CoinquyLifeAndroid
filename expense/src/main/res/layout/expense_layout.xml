@@ -1,26 +1,93 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#8A2BE2">
 
-    <fragment
-        android:id="@+id/addExpenseFragment"
-        android:name="com.example.houseexpenses.presentation.addexpense.AddExpenseFragment"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
+        android:layout_height="70dp"
+        android:background="@drawable/rounded_topbar"
+        app:navigationIcon="@drawable/arrow_back"
+        app:navigationContentDescription="@string/back"
+        app:title="@string/expenses"
+        app:titleTextColor="#8A2BE2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <fragment
-        android:id="@+id/expensesListFragment"
-        android:name="com.example.houseexpenses.presentation.expenselist.ExpensesListFragment"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/expenseContainer"
+        android:layout_width="374dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/rounded_container"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_expense"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar"
+        app:layout_constraintVertical_bias="0.0">
 
-    <fragment
-        android:id="@+id/debtsFragment"
-        android:name="com.example.houseexpenses.presentation.debts.DebtsFragment"
+        <!-- RecyclerView delle spese -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Aggiungi Spesa"
+        android:textColor="#8A2BE2"
+        app:cornerRadius="24dp"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_balance_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saldo: "
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/btn_add_expense"
+        app:layout_constraintBaseline_toBaselineOf="@id/btn_add_expense"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_debts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Debiti"
+        android:textColor="#8A2BE2"
+        app:cornerRadius="24dp"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.263"
+        app:layout_constraintStart_toEndOf="@id/btn_add_expense" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_expenses"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:clipToPadding="false"
+        android:contentDescription="@string/rvExpense"
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_expense"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,8 @@ class DashboardActivity : AppCompatActivity()
     private lateinit var btnBoard: ImageButton
     private lateinit var btnShifts: ImageButton
 
+    @Inject lateinit var appPreferences: AppPreferences
+    private val houseId by lazy { appPreferences.getString("houseId") }
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -44,9 +46,6 @@ class DashboardActivity : AppCompatActivity()
         btnBoard = findViewById(R.id.btnBoard)
         btnShifts = findViewById(R.id.btnShifts)
 
-        val intent = getIntent()
-        var houseId = intent.getStringExtra("coinquyHouseId")
-
         if(houseId != null)
         {
             dashboardViewModel.setHouseId(houseId)
@@ -60,7 +59,6 @@ class DashboardActivity : AppCompatActivity()
 
         btnExpenses.setOnClickListener {
             Intent(this, ExpenseActivity::class.java).apply {
-                putExtra("houseId", houseId)
                 startActivity(this)
             }
         }
@@ -76,14 +74,12 @@ class DashboardActivity : AppCompatActivity()
 
         btnShifts.setOnClickListener {
             Intent(this, ShiftActivity::class.java).apply {
-                putExtra("houseId", houseId)
                 startActivity(this)
             }
         }
 
         imgProfile.setOnClickListener {
             Intent(this, ProfileActivity::class.java).apply {
-                putExtra("houseId", houseId)
                 startActivity(this)
             }
         }

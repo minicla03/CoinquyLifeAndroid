@@ -8,7 +8,8 @@ enum class ExpenseStatus
     INVALID_INPUT("Invalid Input"),
     UNAUTHORIZED("Unauthorized"),
     FORBIDDEN("Forbidden"),
-    NO_CONTENT("No Content");
+    NO_CONTENT("No Content"),
+    EMPTY_INPUT("Empty Input");
 
     private val status: String
 

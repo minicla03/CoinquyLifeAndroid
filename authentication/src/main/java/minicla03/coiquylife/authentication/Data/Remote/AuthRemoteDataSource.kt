@@ -84,4 +84,9 @@ class AuthRemoteDataSource @Inject constructor(
             }
         }
     }
+
+    suspend fun getUser(token: String?): String? {
+        val response = authApi.verifyToken(Map.of("token", token))
+        return response.body()?.keys("username") as? String ?: return nul
+    }
 }

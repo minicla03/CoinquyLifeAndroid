@@ -17,4 +17,6 @@ class ExpenseRemoteDataSource @Inject constructor(
 
     suspend fun updateExpenseStatus(body: String) = expenseApi.updateExpenseStatus(body).body()
 
+    suspend fun getUser(token: String?) = expenseApi.getUser(token).body()
+
 }

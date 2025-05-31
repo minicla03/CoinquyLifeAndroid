@@ -4,12 +4,18 @@ import minicla03.coinquylife.expense.Data.Response.ExpenseResult
 import minicla03.coinquylife.expense.Domain.model.Expense
 import minicla03.coinquylife.expense.Domain.model.StatusExpense
 import minicla03.coinquylife.expense.Domain.repository.IExpenseRepository
+import java.util.Date
 import javax.inject.Inject
 
 class CreateExpenseUseCase @Inject constructor(
     private val repository: IExpenseRepository
-) {
-    suspend operator fun invoke(description: String, amount: Double, houseId: String): ExpenseResult? {
+    private val app: AppPreferences
+) : ICreateExpenseUseCase {
+
+    override suspend operator fun invoke(description: String,
+                                         amount: Double, houseId: String,
+                                         data: Date?, participants: List<String>): ExpenseResult? {
+
         if (amount <= 0) {
             throw IllegalArgumentException("Amount must be greater than zero")
         }
@@ -17,11 +23,11 @@ class CreateExpenseUseCase @Inject constructor(
         val expense = Expense(
             description = description,
             amount = amount,
-            date = System.currentTimeMillis().toString(),
+            date = data,
             status = StatusExpense.PENDING,
-            createdBy = "userId",
+            createdBy = app.getString("userId"),
             houseId = houseId,
-            participants = emptyList()
+            participants = participants
         )
         return repository.createExpense(expense)
     }

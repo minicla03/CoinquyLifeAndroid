@@ -31,4 +31,10 @@ object CoreModule {
     fun provideApiService(tokenProvider: suspend () -> String?): ApiService {
         return ApiService(tokenProvider)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppPreferences(prefs: SharedPreferences): AppPreferences {
+        return AppPreferences(prefs)
+    }
 }

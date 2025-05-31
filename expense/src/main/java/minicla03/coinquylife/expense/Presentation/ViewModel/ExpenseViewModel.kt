@@ -13,11 +13,15 @@ import minicla03.coinquylife.expense.Domain.UseCase.UpdateExpenseStatusUseCase
 import minicla03.coinquylife.expense.Data.Response.ExpenseResult
 import minicla03.coinquylife.expense.Domain.model.Expense
 import kotlinx.coroutines.launch
+import minicla03.coinquylife.expense.Data.Response.ExpenseStatus
+import minicla03.coinquylife.expense.Domain.UseCase.ICreateExpenseUseCase
+import minicla03.coinquylife.expense.Domain.UseCase.IGetAllExpensesUseCase
+import java.util.Date
 
 @HiltViewModel
 class ExpenseViewModel @Inject constructor(
-    private val createExpenseUseCase: CreateExpenseUseCase,
-    private val getAllExpensesUseCase: GetAllExpensesUseCase,
+    private val createExpenseUseCase: ICreateExpenseUseCase,
+    private val getAllExpensesUseCase: IGetAllExpensesUseCase,
     private val calculateDebtUseCase: CalculateDebtUseCase,
     private val updateExpenseStatusUseCase: UpdateExpenseStatusUseCase
 ) : ViewModel() {
@@ -25,28 +29,41 @@ class ExpenseViewModel @Inject constructor(
     private val _expenseState = MutableLiveData<ExpenseResult>()
     val expenseState: LiveData<ExpenseResult> = _expenseState
 
-    private val _expensesState = MutableLiveData<ExpenseResult>()
-    val expensesState: LiveData<ExpenseResult> = _expensesState
+    private val _expensesState = MutableLiveData<List<Expense>?>()
+    val expensesState: LiveData<List<Expense>> = _expensesState
 
     private val _debtState = MutableLiveData<ExpenseResult>()
-    val debtState= LiveData<ExpenseResult>() = _debtState
+    val debtState: LiveData<ExpenseResult> = _debtState
 
     private val _expenseUpdateState = MutableLiveData<ExpenseResult>()
     val expenseUpdateState: LiveData<ExpenseResult> = _expenseUpdateState
 
-    fun createExpense(expense: Expense)
+    fun createExpense(description: String,
+                      amount: Double,
+                      data: Date?,
+                      participants: List<String>,
+                      houseId: String)
     {
+        if( description.isBlank() || amount.isNaN() || participants.isEmpty())
+        {
+            _expenseState.value = ExpenseResult(ExpenseStatus.EMPTY_INPUT,"Invalid input data")
+            return
+        }
+
         viewModelScope.launch {
-            val result = createExpenseUseCase(expense)
-            _expenseState.value = result
+            viewModelScope.launch {
+                val result = createExpenseUseCase(description, amount, houseId, data, participants) { result ->
+                    _expenseState.postValue(result)
+                }
+            }
         }
     }
 
     fun getAllExpenses(houseId: String)
     {
         viewModelScope.launch {
-            val result = getAllExpensesUseCase(houseId){
-                _
+            val result = getAllExpensesUseCase(houseId)
+            _expensesState.postValue(result)
             }
         }
     }
@@ -54,8 +71,20 @@ class ExpenseViewModel @Inject constructor(
     fun calculateDebt(houseId: String)
     {
         viewModelScope.launch {
-            val result = calculateDebtUseCase(houseId){ result->
+            val result = calculateDebtUseCase(houseId){result->
                 debtState.postValue(result)
+            }
+        }
+    }
+
+    fun updateExpenseStatus(expense: Expense)
+    {
+        viewModelScope.launch {
+            val result = updateExpenseStatusUseCase(expense) { result ->
+                _expenseUpdateState.postValue(result)
+            }
+            if (result is ExpenseResult.Error) {
+                _expenseUpdateState.postValue(result)
             }
         }
     }

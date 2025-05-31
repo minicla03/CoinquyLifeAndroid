@@ -1,18 +1,16 @@
 package minicla03.coiquylife.authentication
 
 import android.Manifest
-import android.content.Intent
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AlertDialog
-import minicla03.coiquylife.authentication.Presentation.UI.AuthActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity()
 {

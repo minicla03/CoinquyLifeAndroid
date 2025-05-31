@@ -13,4 +13,7 @@ interface AuthApi {
 
     @POST("auth/register")
     suspend fun register(@Body user: User): Response<AuthResult>
+
+    @POST("gateway/verify-token")
+    suspend fun verifyToken(@Body body: Map<String, String>): Response<Map<String, String>>
 }
