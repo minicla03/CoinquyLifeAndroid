@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#673AB7"
+    tools:context=".Presentation.UI.ShiftActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/arrow_back"
+                android:layout_centerVertical="true"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gestione_turni_casa"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#9C27B0">
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/turni_di_pulizia"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_cleaning"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerCoinquilino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/coinquilini_array"
+                android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/rounded_edit_text"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/etStartDate"
+                    android:layout_width="296dp"
+                    android:layout_height="43dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="gg/mm/aaaa"
+                    android:inputType="date"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#CCCCCC" />
+
+                <ImageView
+                    android:id="@+id/ivStartDatePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Select Start Date"
+                    android:src="@drawable/ic_calendar_blue"
+                    app:tint="@android:color/white" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/rounded_edit_text"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <EditText
+                        android:id="@+id/etEndDate"
+                        android:layout_width="310dp"
+                        android:layout_height="49dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="gg/mm/aaaa"
+                        android:inputType="date"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="#CCCCCC" />
+
+                    <ImageView
+                        android:id="@+id/ivEndDatePicker"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="Select End Date"
+                        android:src="@drawable/ic_calendar_blue"
+                        app:tint="@android:color/white" />
+                </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSalvaIndisponibilita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salva indisponibilità"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#00BCD4" android:padding="12dp"/>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white">
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calendario_turni"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_calendar_blue"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="4dp">
+                <TextView style="@style/TableColumnHeader"
+                    android:text="Giorno" android:layout_weight="1"/>
+                <TextView style="@style/TableColumnHeader"
+                    android:text="Coinquy" android:layout_weight="1"/>
+                <TextView style="@style/TableColumnHeader"
+                    android:text="Task" android:layout_weight="1"/>
+                <TextView style="@style/TableColumnHeader"
+                    android:text="Descrizione" android:layout_weight="1"/>
+                <TextView style="@style/TableColumnHeader"
+                    android:text="Orario" android:layout_weight="1"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qui verranno mostrati i turni assegnati ai coinquilini."
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/btnVisualizzaPianificazione"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visualizza pianificazione"
+                android:textColor="#2196F3"
+                android:layout_gravity="center_horizontal"
+                android:drawableStart="@drawable/ic_visibility"
+                android:drawablePadding="4dp"/>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#9C27B0">
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Richieste di Scambio"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_exchange"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/btnRicevute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ricevute"
+                android:textColor="@android:color/black"
+                android:backgroundTint="#F8BBD0" android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nessuna richiesta ricevuta"
+                android:textColor="#CCCCCC"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/btnInviate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inviate"
+                android:textColor="@android:color/black"
+                android:backgroundTint="#F8BBD0"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nessuna richiesta inviata"
+                android:textColor="#CCCCCC"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/btnEffettuaScambio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Effettua Scambio"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#FF5722" android:padding="12dp"/>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#9C27B0"> <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crea Compito"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_task"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/etDescrizioneCompito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrizione"
+                android:textColorHint="#CCCCCC"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rounded_edit_text"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerTipoCompito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/tipo_compito_array" android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/rounded_edit_text"
+                android:padding="8dp"
+                android:layout_marginBottom="16dp">
+                <EditText
+                    android:id="@+id/etTaskDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="gg/mm/aaaa"
+                    android:textColorHint="#CCCCCC"
+                    android:textColor="@android:color/white"
+                    android:inputType="date"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:clickable="true"/>
+                <ImageView
+                    android:id="@+id/ivTaskDatePicker"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@android:color/white"
+                    android:contentDescription="Select Task Date"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAggiungiCompito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aggiungi Compito"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#4CAF50" android:padding="12dp"/>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

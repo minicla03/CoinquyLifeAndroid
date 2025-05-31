@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Shift</string>
+    <string name="gestione_turni_casa">Gestione Turni</string>
+    <string name="turni_di_pulizia">Turni di Pulizia</string>
+    <string name="calendario_turni">Calendario Turni</string>
 </resources>
